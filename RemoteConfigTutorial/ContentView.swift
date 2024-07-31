@@ -1,24 +1,21 @@
-//
-//  ContentView.swift
-//  RemoteConfigTutorial
-//
-//  Created by Jboy422 on 2024/07/31.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var remoteConfigManager: RemoteConfigManager
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Welcome to the app!")
         }
-        .padding()
+        .alert(isPresented: $remoteConfigManager.forceUpdateRequired) {
+                    Alert(
+                        title: Text("更新が必要です"),
+                        message: Text("アプリの新しいバージョンが利用可能です。アプリを引き続き使用するには更新してください。"),
+                        dismissButton: .default(Text("OK")) {
+                            // テスト用なので、ここでは何もアクションを起こしません
+                            print("更新アラートが解除されました")
+                        }
+                    )
+                }
     }
-}
-
-#Preview {
-    ContentView()
 }
